@@ -1,5 +1,6 @@
 let panel1 = ["panel0","panel1","panel2","panel3","panel4","panel5","panel6","panel7","panel8"]
 let panel2 = ["panela0","panela1","panela2","panela3","panela4","panela5","panela6","panela7","panela8"]
+let panel = []
 
 var sum1 = 0
 var sumhelp1 = 0
@@ -144,8 +145,78 @@ function panelcaluclation(id){
 //１、どのパネルにどんな数値が入ったか。
 //２、押したパネルの数値そのもの(nextpanelに保存するため)
 //３、押したパネルが何なのか(押したパネルの指定にidが必要だから)
-//４、
+//４
 
+
+function CPU(){
+  //全てのボタンにおいて押した場合のパターンを考え、
+  //その中で最も合計値が高いものを採用する。
+  //panela0 から順番に行い、勝ち残り方式で最良を決定する。
+
+  //用意する数字
+  //計算結果を保存し、勝ち残っている物と比べるための変数
+  //勝った数や結果をストックする変数。
+  var best = 0
+  let bestdelist = []
+  let bestsubpanellist = []
+  var bestid = ''
+  panel = panel2
+ for(l=0; l < panel2.length ;l++){ //パネルの数だけ続けるfor文
+
+   var supposedlist = panelcaluclation(panel[l])
+   var supposednextnumber = supposedlist.shift()   //この数字はプレイヤーの手番に影響するだけなのでここでは使わない。
+   var supposedpanelnumber = supposedlist.shift()  //この数字は今調べているパネルに入る数字なので、合計値を出すときに使う
+   let delist = []                   //deのリスト。則ちパネルのidのリスト
+   let subpanellist = []             //サブパネルのリスト。則ち計算結果のリスト
+   let subpanellistkeep = []         //合計値を出すときに破壊的な操作をするので、サブパネルリストをこっちでキープ
+
+   for(i=0; i < supposedlist.length ;i++){//次の計算で条件分岐するために使うリストを生成するためのfor文
+     delist.push(supposedlist[i][0])
+     subpanellist.push(supposedlist[i][1])
+     subpanellistkeep.push(supposedlist[i][1])
+   }
+   var supposedsum = 0
+   for(i=0; i < supposedlist.length ;i++){  //パネルの計算が終わるまで続けるfor文
+       if(delist.includes(panel2[i])){
+         supposedsum = supposedsum + subpanellist.shift()
+       } else if (panel[l] == panel2[i]){
+         supposedsum = supposedsum + supposedpanelnumber 
+       }else {
+         supposedsum = supposedsum + Number(document.getElementById(panel2[i]).innerHTML)
+       }
+
+     }
+     if(best < supposedsum){ //最高値がsupposedsumならそっちをbestにする。
+
+       best = supposedsum 
+       bestdelist = delist
+       bestsubpanellist = subpanellistkeep
+       bestid = panel[l]
+
+     }else if(best == supposedsum){//同値だったら時刻によってランダムに結果を変えよう。
+
+       var sec = now.getSeconds()
+       if(sec % 2 == 1){
+         best = supposedsum
+         bestdelist = delist
+         bestsubpanellist = subpanellistkeep
+         bestid = panel[l]
+       }
+
+     }else{
+       //もっとも合計値が高いのはbestなので今現在特に変化なし。
+     }
+ }
+ var nextnumber = Number(document.getElementById(panel[bestid]).innerHTML)
+ for (i=0; i < result.length ;i++){
+   document.getElementById(delist[i]).innerHTML= subpanellistkeep[i]
+    }
+   document.getElementById(panel[bestid]).innerHTML=Number(document.getElementById("nextpanel").innerHTML);//押したパネルはに
+   document.getElementById('nextpanel').innerHTML = nextnumber
+   
+   flg2 = flg2 + 1 
+   document.getElementById('winner').innerHTML = flg2
+  }
 
 
 
@@ -185,6 +256,7 @@ function panelcaluclation(id){
      
       flg2 = flg2 + 1 
       document.getElementById('winner').innerHTML = flg2
+      CPU()
      //ここから下は終了後の勝敗判定
      //いちいち押すごとにトリガーするのもかったるいが、やはり常に作動させる方法が思いつかなかった。
      if(flg2 == count){  
@@ -209,6 +281,7 @@ function panelcaluclation(id){
     }
     
   }
+ 
 
 
 
