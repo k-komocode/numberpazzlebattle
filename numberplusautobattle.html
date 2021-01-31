@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <title>サンプルパズル</title>
+
+        <meta charset="utf-8">
+            <!--　上の文は文字コードの指定 -->
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+            <!--　上の文はbootstrapというフレームワークへのリンク。無料。これがあることでパネルがスタイリッシュになってる -->
+
+        <link rel="stylesheet" href="plusautobattle.css">
+
+            <!--  hrefは外部リンクや同フォルダ内の別ファイルとのリンクを指定、srcは埋め込むファイルのパス情報
+            多分この上下の文の順番を入れ替えると上手くいかなくなる。リンクを指定した後埋め込むので。多分　-->
+
+        
+
+    </head>
+
+    <body>
+        <form>
+            <p>
+                <label>まずは合計手数を決めてください。<input type="text" id="movecount" size="40"></label>
+            </p>
+            <p>
+                <input type="button" value="決定" onclick="move()">
+            </p>
+        </form>
+        <h1>VSパズル</h1>
+        <div class ='firld' id = 'firldid'>
+
+            <p>
+            <div id="bodydiv" class='panelbody1'>
+                    <div>あなた</div><br>
+                <button id="panel0" class="btn btn-secondary tile" onclick="pushed(this.id)" > </button> <button id="panel1" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panel2" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button><br />
+
+                <button id="panel3" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panel4" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panel5" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button><br />
+
+                <button id="panel6" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panel7"  class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panel8" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button>
+                    <!-- btn btn-secondary tileは、bootstrapから引っ張ってきた要素。onclickはクリックに大してこう反応せよというコマンド　-->
+                <div id = 'sum1'></div>
+            </div>
+            </p>
+
+            <p>
+            <div id="bodydiv2" class='panelbody2'>
+                <div>相手</div><br>
+                <button id="panela0" class="btn btn-secondary tile" onclick="pushed(this.id)" > </button> <button id="panela1" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panela2" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button><br />
+
+                <button id="panela3" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panela4" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panela5" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button><br />
+
+                <button id="panela6" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panela7"  class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panela8" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button>
+                    <!-- btn btn-secondary tileは、bootstrapから引っ張ってきた要素。onclickはクリックに大してこう反応せよというコマンド　-->
+                <div id = 'sum2'></div>    
+            </div>
+            </p>
+        </div>
+        <br>
+
+        <button class="btn btn-light" onclick="reset()">リセット</button>
+        <br>
+        <div id = "nextid" class = 'nextclass'>
+            <button id="nextpanel" class="btn btn-secondary tile" ></button>
+        </div>
+        <div id = "stop">手番が飛んでます。</div>
+        <div id = "winner"></div>
+        <div id = "kakunin"></div>
+                
+            
+            
+        
+        
+        <script type="text/javascript" src="pulsautobattle.js"></script>
+    </body>
+
+</html>

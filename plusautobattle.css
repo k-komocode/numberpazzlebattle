@@ -1,0 +1,40 @@
+.tile {
+
+    width:100px; 
+
+    height:100px;
+
+    font-family:arial black;
+
+    font-size: x-large;
+
+  }
+  h1 {
+    text-align: center;
+    }
+  body.div {
+    margin: 0; /* 要素の外側の余白を0に定義 */
+    padding: 30; /* 要素の内側の余白を0に定義 */
+  }
+  
+  
+  .firld div {
+  
+    float: left;
+  
+    width: 50%; /* 要素の幅を50%に定義 */
+    background-color: #aaa; /* 視覚化のための背景色 */
+  
+  }
+  .panelbody1{
+
+    text-align: center;
+  }
+  .panelbody2{
+
+    text-align: center;
+  }
+  .nextclass{
+
+    text-align: center;
+  }
