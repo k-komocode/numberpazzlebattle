@@ -56,6 +56,7 @@ function reset(){
   document.getElementById(panel2[8]).innerHTML=9
   document.getElementById('nextpanel').innerHTML=0
   document.getElementById("winner").innerHTML = ""
+  document.getElementById('winner').innerHTML = 0
   sum1 = 0
   sumhelp1 = 0
  sum2 = 0
@@ -76,47 +77,47 @@ function panelcaluclation(id){
   var subpanel = []       //パネルの表示している要素を入れる配列(この時点では空)
   var de = []             //パネルidそのものを入れる配列
   var returnmatrix = []
-  if([1,3,4].includes(Number(panelnumber))){                //1を推したときに反応する奴
+  if([1,3,4].includes(Number(panelnumber))){                //panel0を推したときに反応する奴
     subpanel.push(document.getElementById(panel[0]).innerHTML)
     de.push(panel[0])
     
   }
-  if([0,2,3,4,5].includes(Number(panelnumber))){            //2を推したときに反応する奴
+  if([0,2,3,4,5].includes(Number(panelnumber))){            //panel1を推したときに反応する奴
     subpanel.push(document.getElementById(panel[1]).innerHTML)
     de.push(panel[1])
     
  }
- if([1,4,5].includes(Number(panelnumber))){                //3を推したときに反応する奴
+ if([1,4,5].includes(Number(panelnumber))){                //panel2を推したときに反応する奴
     subpanel.push(document.getElementById(panel[2]).innerHTML)
     de.push(panel[2])
   
   }
-  if([0,1,4,6,7].includes(Number(panelnumber))){            //4を推したときに反応する奴
+  if([0,1,4,6,7].includes(Number(panelnumber))){            //panel3を推したときに反応する奴
     subpanel.push(document.getElementById(panel[3]).innerHTML)
     de.push(panel[3])
   
   }
-  if([0,1,2,3,5,6,7,8].includes(Number(panelnumber))){      //5を推したときに反応する奴
+  if([0,1,2,3,5,6,7,8].includes(Number(panelnumber))){      //panel4を推したときに反応する奴
     subpanel.push(document.getElementById(panel[4]).innerHTML)
     de.push(panel[4])
   
   }
-  if([1,2,4,7,8,].includes(Number(panelnumber))){           //6を推したときに反応する奴
+  if([1,2,4,7,8,].includes(Number(panelnumber))){           //panel5を推したときに反応する奴
     subpanel.push(document.getElementById(panel[5]).innerHTML)
     de.push(panel[5])
   
   }
-  if([3,4,7].includes(Number(panelnumber))){                //7を推したときに反応する奴
+  if([3,4,7].includes(Number(panelnumber))){                //panel6を推したときに反応する奴
     subpanel.push(document.getElementById(panel[6]).innerHTML)
     de.push(panel[6])
   
   }
-  if([3,4,5,6,8].includes(Number(panelnumber))){            //8を推したときに反応する奴
+  if([3,4,5,6,8].includes(Number(panelnumber))){            //panel7を推したときに反応する奴
     subpanel.push(document.getElementById(panel[7]).innerHTML)
     de.push(panel[7])
   
   }
-  if([4,5,7].includes(Number(panelnumber))){                //9を推したときに反応する奴
+  if([4,5,7].includes(Number(panelnumber))){                //panel8を推したときに反応する奴
     subpanel.push(document.getElementById(panel[8]).innerHTML)
     de.push(panel[8])
   
@@ -129,13 +130,11 @@ function panelcaluclation(id){
                                             //substringは前の変数(この場合はab)を文字列に変え、
                                             //かつそのn番目以降を返す関数
   }
-returnmatrix = [nextNumber]
-for (i=0; i < subpanel.length ;i++){
-  returnmatrix.push([de[i],[subpanel[i]]])
-}
-
-return returnmatrix
-  
+  returnmatrix = [nextNumber,panelnumber]
+  for (i=0; i < subpanel.length ;i++){
+    returnmatrix.push([de[i],[subpanel[i]]])
+  }
+  return returnmatrix
 }
   
 
@@ -144,7 +143,7 @@ return returnmatrix
 //caluculation関数でリターンしなきゃいけない物。
 //１、どのパネルにどんな数値が入ったか。
 //２、押したパネルの数値そのもの(nextpanelに保存するため)
-//３、
+//３、押したパネルが何なのか(押したパネルの指定にidが必要だから)
 //４、
 
 
@@ -168,76 +167,20 @@ return returnmatrix
       flg4 = 0
     }
     if (flg4 == 1){
-      var panelnumber = id.replace(/[^0-9]/g, ''); //idから数字の要素だけ抜く。panelnumberは押したパネルの場所
-      var subpanel = []       //パネルの表示している要素を入れる配列(この時点では空)
-      var de = []             //パネルidそのものを入れる配列
-    
-      if([1,3,4].includes(Number(panelnumber))){                //1を推したときに反応する奴
-        subpanel.push(document.getElementById(panel[0]).innerHTML)
-        de.push(panel[0])
-        
-      }
-      if([0,2,3,4,5].includes(Number(panelnumber))){            //2を推したときに反応する奴
-        subpanel.push(document.getElementById(panel[1]).innerHTML)
-        de.push(panel[1])
-        
-     }
-     if([1,4,5].includes(Number(panelnumber))){                //3を推したときに反応する奴
-        subpanel.push(document.getElementById(panel[2]).innerHTML)
-        de.push(panel[2])
-      
-      }
-      if([0,1,4,6,7].includes(Number(panelnumber))){            //4を推したときに反応する奴
-        subpanel.push(document.getElementById(panel[3]).innerHTML)
-        de.push(panel[3])
-      
-      }
-      if([0,1,2,3,5,6,7,8].includes(Number(panelnumber))){      //5を推したときに反応する奴
-        subpanel.push(document.getElementById(panel[4]).innerHTML)
-        de.push(panel[4])
-      
-      }
-      if([1,2,4,7,8,].includes(Number(panelnumber))){           //6を推したときに反応する奴
-        subpanel.push(document.getElementById(panel[5]).innerHTML)
-        de.push(panel[5])
-      
-      }
-      if([3,4,7].includes(Number(panelnumber))){                //7を推したときに反応する奴
-        subpanel.push(document.getElementById(panel[6]).innerHTML)
-        de.push(panel[6])
-      
-      }
-      if([3,4,5,6,8].includes(Number(panelnumber))){            //8を推したときに反応する奴
-        subpanel.push(document.getElementById(panel[7]).innerHTML)
-        de.push(panel[7])
-      
-      }
-      if([4,5,7].includes(Number(panelnumber))){                //9を推したときに反応する奴
-        subpanel.push(document.getElementById(panel[8]).innerHTML)
-        de.push(panel[8])
-      
-      }
-      const nextNumber = Number(document.getElementById(panel[panelnumber]).innerHTML) //押したパネルの数値を保存
-      document.getElementById(panel[panelnumber]).innerHTML=Number(document.getElementById("nextpanel").innerHTML);//押したパネルはに
-
-
-      for (i=0; i < subpanel.length ;i++){
-         var ab = Number(subpanel[i])+ nextNumber
-         ab = String(ab)
-         subpanel[i] = ab.substring(ab.length-1)//ab.lengthはabの長さ。二桁なら2になる。
-                                                //substringは前の変数(この場合はab)を文字列に変え、
-                                                //かつそのn番目以降を返す関数
-      }
+      let result = panelcaluclation(id)
+      nextnumber = result.shift()
+      panelnumber = result.shift()
       //ここから下のfor文は計算結果を指定したパネルへ入れるもの。
-     for (i=0; i < subpanel.length ;i++){
-      document.getElementById(de[i]).innerHTML= subpanel[i]   //panelのidに直接代入したかったが押したパネルによって
+     for (i=0; i < result.length ;i++){
+      document.getElementById(result[i][0]).innerHTML= result[i][1]   //panelのidに直接代入したかったが押したパネルによって
                                                               //影響するパネルは変わり、かつそれらは不連続なので
                                                               //for文でかけなかった。
                                                               //de[]という配列に、その時その時に影響するpanelのidを入れ、
                                                               //それらを使ってfor文で結果を代入していく。
       
        }
-      document.getElementById('nextpanel').innerHTML = nextNumber
+      document.getElementById(panel[panelnumber]).innerHTML=Number(document.getElementById("nextpanel").innerHTML);//押したパネルはに
+      document.getElementById('nextpanel').innerHTML = nextnumber
       
      
       flg2 = flg2 + 1 
