@@ -71,9 +71,86 @@ function reset(){
     reset()
   }
 
-
-
+function panelcaluclation(id){
+  var panelnumber = id.replace(/[^0-9]/g, ''); //idから数字の要素だけ抜く。panelnumberは押したパネルの場所
+  var subpanel = []       //パネルの表示している要素を入れる配列(この時点では空)
+  var de = []             //パネルidそのものを入れる配列
+  var returnmatrix = []
+  if([1,3,4].includes(Number(panelnumber))){                //1を推したときに反応する奴
+    subpanel.push(document.getElementById(panel[0]).innerHTML)
+    de.push(panel[0])
+    
+  }
+  if([0,2,3,4,5].includes(Number(panelnumber))){            //2を推したときに反応する奴
+    subpanel.push(document.getElementById(panel[1]).innerHTML)
+    de.push(panel[1])
+    
+ }
+ if([1,4,5].includes(Number(panelnumber))){                //3を推したときに反応する奴
+    subpanel.push(document.getElementById(panel[2]).innerHTML)
+    de.push(panel[2])
   
+  }
+  if([0,1,4,6,7].includes(Number(panelnumber))){            //4を推したときに反応する奴
+    subpanel.push(document.getElementById(panel[3]).innerHTML)
+    de.push(panel[3])
+  
+  }
+  if([0,1,2,3,5,6,7,8].includes(Number(panelnumber))){      //5を推したときに反応する奴
+    subpanel.push(document.getElementById(panel[4]).innerHTML)
+    de.push(panel[4])
+  
+  }
+  if([1,2,4,7,8,].includes(Number(panelnumber))){           //6を推したときに反応する奴
+    subpanel.push(document.getElementById(panel[5]).innerHTML)
+    de.push(panel[5])
+  
+  }
+  if([3,4,7].includes(Number(panelnumber))){                //7を推したときに反応する奴
+    subpanel.push(document.getElementById(panel[6]).innerHTML)
+    de.push(panel[6])
+  
+  }
+  if([3,4,5,6,8].includes(Number(panelnumber))){            //8を推したときに反応する奴
+    subpanel.push(document.getElementById(panel[7]).innerHTML)
+    de.push(panel[7])
+  
+  }
+  if([4,5,7].includes(Number(panelnumber))){                //9を推したときに反応する奴
+    subpanel.push(document.getElementById(panel[8]).innerHTML)
+    de.push(panel[8])
+  
+  }
+  const nextNumber = Number(document.getElementById(panel[panelnumber]).innerHTML) //押したパネルの数値を保存
+  for (i=0; i < subpanel.length ;i++){
+     var ab = Number(subpanel[i])+ nextNumber 
+     ab = String(ab)
+     subpanel[i] = ab.substring(ab.length-1)//ab.lengthはabの長さ。二桁なら2になる。
+                                            //substringは前の変数(この場合はab)を文字列に変え、
+                                            //かつそのn番目以降を返す関数
+  }
+returnmatrix = [nextNumber]
+for (i=0; i < subpanel.length ;i++){
+  returnmatrix.push([de[i],[subpanel[i]]])
+}
+
+return returnmatrix
+  
+}
+  
+
+
+    
+//caluculation関数でリターンしなきゃいけない物。
+//１、どのパネルにどんな数値が入ったか。
+//２、押したパネルの数値そのもの(nextpanelに保存するため)
+//３、
+//４、
+
+
+
+
+
   function pushed(id){
     let pushpanel = document.getElementById(id);
     if ((pushpanel.parentNode.getAttribute('id') == "bodydiv2") && (flg3 != 2)){
@@ -151,7 +228,7 @@ function reset(){
                                                 //substringは前の変数(この場合はab)を文字列に変え、
                                                 //かつそのn番目以降を返す関数
       }
-
+      //ここから下のfor文は計算結果を指定したパネルへ入れるもの。
      for (i=0; i < subpanel.length ;i++){
       document.getElementById(de[i]).innerHTML= subpanel[i]   //panelのidに直接代入したかったが押したパネルによって
                                                               //影響するパネルは変わり、かつそれらは不連続なので
@@ -164,15 +241,15 @@ function reset(){
       
      
       flg2 = flg2 + 1 
-      document.getElementById('winner').innerHTML = count
+      document.getElementById('winner').innerHTML = flg2
      //ここから下は終了後の勝敗判定
      //いちいち押すごとにトリガーするのもかったるいが、やはり常に作動させる方法が思いつかなかった。
      if(flg2 == count){  
        for (l=0; l < panel.length ;l++){
 
         sumhelp1 = Number(document.getElementById(panel1[l]).innerHTML)
-        sum1 = sum1 + sumhelp2
-        sumhelp2 = Number(document.getElementById(panel1[l]).innerHTML)
+        sum1 = sum1 + sumhelp1
+        sumhelp2 = Number(document.getElementById(panel2[l]).innerHTML)
         sum2 = sum2 + sumhelp2
        }
 
