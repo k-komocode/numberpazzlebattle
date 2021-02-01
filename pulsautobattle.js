@@ -7,8 +7,8 @@ var sumhelp1 = 0
 var sum2 = 0
 var sumhelp2 = 0
 var flg2 = 0
-var flg3 = 0
-var flg4 = 0
+
+var flg4 = new Boolean()
 
 /*for (i = 0; i < panel.length; i++){
     document.getElementById(panel[i]).innerHTML=1;
@@ -55,7 +55,7 @@ function reset(){
   document.getElementById(panel2[6]).innerHTML=7
   document.getElementById(panel2[7]).innerHTML=8
   document.getElementById(panel2[8]).innerHTML=9
-  document.getElementById('nextpanel').innerHTML=0
+  document.getElementById('nextpanel').innerHTML=5
   document.getElementById("winner").innerHTML = ""
   document.getElementById('winner').innerHTML = 0
   sum1 = 0
@@ -67,11 +67,11 @@ function reset(){
  flg4 = 0
 }
 
-  function move(){
+function move(){
     count = Number(document.getElementById("movecount").value)
     document.getElementById("firldid").style.visibility = "visible"
     reset()
-  }
+}
 
 function panelcaluclation(id){
   var panelnumber = id.replace(/[^0-9]/g, ''); //idから数字の要素だけ抜く。panelnumberは押したパネルの場所
@@ -135,7 +135,9 @@ function panelcaluclation(id){
   for (i=0; i < subpanel.length ;i++){
     returnmatrix.push([de[i],[subpanel[i]]])
   }
-  return returnmatrix
+  return returnmatrix   //[nextNumber,panelnumber,[de[0],subpanel[0]]・・・・・・]
+                        //下はリターンされる要素の型
+                        //[数値,文字,[文字,文字]・・・・・・]
 }
   
 
@@ -161,11 +163,10 @@ function CPU(){
   let bestsubpanellist = []
   var bestid = ''
   panel = panel2
- for(l=0; l < panel2.length ;l++){ //パネルの数だけ続けるfor文
-
+  for(l=0; l < panel2.length ;l++){ //パネルの数だけ続けるfor文
    var supposedlist = panelcaluclation(panel[l])
    var supposednextnumber = supposedlist.shift()   //この数字はプレイヤーの手番に影響するだけなのでここでは使わない。
-   var supposedpanelnumber = supposedlist.shift()  //この数字は今調べているパネルに入る数字なので、合計値を出すときに使う
+   var supposedpanelnumber = Number(supposedlist.shift())  //この数字は今調べているパネルに入る数字なので、合計値を出すときに使う
    let delist = []                   //deのリスト。則ちパネルのidのリスト
    let subpanellist = []             //サブパネルのリスト。則ち計算結果のリスト
    let subpanellistkeep = []         //合計値を出すときに破壊的な操作をするので、サブパネルリストをこっちでキープ
@@ -178,14 +179,14 @@ function CPU(){
    var supposedsum = 0
    for(i=0; i < supposedlist.length ;i++){  //パネルの計算が終わるまで続けるfor文
        if(delist.includes(panel2[i])){
-         supposedsum = supposedsum + subpanellist.shift()
+         supposedsum = supposedsum + Number(subpanellist.shift())
        } else if (panel[l] == panel2[i]){
          supposedsum = supposedsum + supposedpanelnumber 
        }else {
          supposedsum = supposedsum + Number(document.getElementById(panel2[i]).innerHTML)
        }
 
-     }
+    }
      if(best < supposedsum){ //最高値がsupposedsumならそっちをbestにする。
 
        best = supposedsum 
@@ -194,7 +195,7 @@ function CPU(){
        bestid = panel[l]
 
      }else if(best == supposedsum){//同値だったら時刻によってランダムに結果を変えよう。
-
+       var now = new Date();
        var sec = now.getSeconds()
        if(sec % 2 == 1){
          best = supposedsum
@@ -206,38 +207,32 @@ function CPU(){
      }else{
        //もっとも合計値が高いのはbestなので今現在特に変化なし。
      }
- }
- var nextnumber = Number(document.getElementById(panel[bestid]).innerHTML)
- for (i=0; i < result.length ;i++){
-   document.getElementById(delist[i]).innerHTML= subpanellistkeep[i]
-    }
-   document.getElementById(panel[bestid]).innerHTML=Number(document.getElementById("nextpanel").innerHTML);//押したパネルはに
-   document.getElementById('nextpanel').innerHTML = nextnumber
-   
-   flg2 = flg2 + 1 
-   document.getElementById('winner').innerHTML = flg2
   }
+    var nextnumber = Number(document.getElementById(bestid).innerHTML)
+    for (i=0; i < result.length ;i++){
+      document.getElementById(bestdelist[i]).innerHTML= bestsubpanellist[i]
+      }
+    document.getElementById(bestid).innerHTML=Number(document.getElementById("nextpanel").innerHTML);//押したパネルはに
+    document.getElementById('nextpanel').innerHTML = nextnumber
+   
+    flg2 = flg2 + 1 
+    document.getElementById('winner').innerHTML = flg2
+}
 
 
 
 
   function pushed(id){
     let pushpanel = document.getElementById(id);
-    if ((pushpanel.parentNode.getAttribute('id') == "bodydiv2") && (flg3 != 2)){
-      panel = panel2
-      flg3 = 2
-      flg4 = 1
-      document.getElementById("stop").style.visibility = "hidden"
-    }else if ((pushpanel.parentNode.getAttribute('id') == "bodydiv") && (flg3 != 1)){
+    if (pushpanel.parentNode.getAttribute('id') == "bodydiv"){
       panel = panel1
-      flg3 = 1
-      flg4 = 1
+      flg4 = true
       document.getElementById("stop").style.visibility = "hidden"
     }else {
       document.getElementById("stop").style.visibility = "visible"
-      flg4 = 0
+      flg4 = false
     }
-    if (flg4 == 1){
+    if (flg4 == true){
       let result = panelcaluclation(id)
       nextnumber = result.shift()
       panelnumber = result.shift()
@@ -250,7 +245,7 @@ function CPU(){
                                                               //それらを使ってfor文で結果を代入していく。
       
        }
-      document.getElementById(panel[panelnumber]).innerHTML=Number(document.getElementById("nextpanel").innerHTML);//押したパネルはに
+      document.getElementById(panel1[Number(panelnumber)]).innerHTML=Number(document.getElementById("nextpanel").innerHTML);//押したパネルはに
       document.getElementById('nextpanel').innerHTML = nextnumber
       
      
