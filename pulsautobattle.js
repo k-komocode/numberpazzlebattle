@@ -170,7 +170,7 @@ function CPU(){
    let delist = []                   //deのリスト。則ちパネルのidのリスト
    let subpanellist = []             //サブパネルのリスト。則ち計算結果のリスト
    let subpanellistkeep = []         //合計値を出すときに破壊的な操作をするので、サブパネルリストをこっちでキープ
-
+   
    for(i=0; i < supposedlist.length ;i++){//次の計算で条件分岐するために使うリストを生成するためのfor文
      delist.push(supposedlist[i][0])
      subpanellist.push(supposedlist[i][1])
@@ -187,6 +187,7 @@ function CPU(){
        }
 
     }
+    
      if(best < supposedsum){ //最高値がsupposedsumならそっちをbestにする。
 
        best = supposedsum 
@@ -208,15 +209,20 @@ function CPU(){
        //もっとも合計値が高いのはbestなので今現在特に変化なし。
      }
   }
+  
     var nextnumber = Number(document.getElementById(bestid).innerHTML)
-    for (i=0; i < result.length ;i++){
+    
+    for (i=0; i < bestdelist.length ;i++){
       document.getElementById(bestdelist[i]).innerHTML= bestsubpanellist[i]
       }
+      document.getElementById("debug").innerHTML = 'ここまでは動いたで'
+      //上の行に'ここまで動いた'入れると表示されない。
     document.getElementById(bestid).innerHTML=Number(document.getElementById("nextpanel").innerHTML);//押したパネルはに
     document.getElementById('nextpanel').innerHTML = nextnumber
    
     flg2 = flg2 + 1 
     document.getElementById('winner').innerHTML = flg2
+    
 }
 
 
