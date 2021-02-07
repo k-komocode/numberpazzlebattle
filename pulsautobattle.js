@@ -226,6 +226,26 @@ function CPU(){
     flg2 = flg2 + 1 
     document.getElementById('winner').innerHTML = flg2
     document.getElementById("think").style.visibility = "hidden"
+
+    if(flg2/2 == count){  
+      for (l=0; l < panel.length ;l++){
+
+       sumhelp1 = Number(document.getElementById(panel1[l]).innerHTML)
+       sum1 = sum1 + sumhelp1
+       sumhelp2 = Number(document.getElementById(panel2[l]).innerHTML)
+       sum2 = sum2 + sumhelp2
+      }
+
+       document.getElementById("sum1").innerHTML = sum1
+       document.getElementById("sum2").innerHTML = sum2
+       if (sum1 > sum2){
+         document.getElementById("winner").innerHTML = "<p>左の勝ちです</p>"
+       }else if (sum1 < sum2){
+         document.getElementById("winner").innerHTML = "<p>右の勝ちです</p>"
+       }else{
+         document.getElementById("winner").innerHTML = "<p>同点です</p>"
+       }
+     }
     
     
 }
@@ -271,25 +291,7 @@ function CPU(){
       
      //ここから下は終了後の勝敗判定
      //いちいち押すごとにトリガーするのもかったるいが、やはり常に作動させる方法が思いつかなかった。
-     if(flg2/2 == count){  
-       for (l=0; l < panel.length ;l++){
 
-        sumhelp1 = Number(document.getElementById(panel1[l]).innerHTML)
-        sum1 = sum1 + sumhelp1
-        sumhelp2 = Number(document.getElementById(panel2[l]).innerHTML)
-        sum2 = sum2 + sumhelp2
-       }
-
-        document.getElementById("sum1").innerHTML = sum1
-        document.getElementById("sum2").innerHTML = sum2
-        if (sum1 > sum2){
-          document.getElementById("winner").innerHTML = "<p>左の勝ちです</p>"
-        }else if (sum1 < sum2){
-          document.getElementById("winner").innerHTML = "<p>右の勝ちです</p>"
-        }else{
-          document.getElementById("winner").innerHTML = "<p>同点です</p>"
-        }
-      }
     }
     flg1 = 0
   }
