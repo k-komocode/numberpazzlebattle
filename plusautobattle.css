@@ -34,6 +34,10 @@
 
     text-align: center;
   }
+  .thinkingtime{
+    font-family:monospace;
+    font-size: 120;
+  }
   .nextclass{
 
     text-align: center;

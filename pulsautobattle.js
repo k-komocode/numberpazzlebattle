@@ -15,6 +15,7 @@ var flg4 = new Boolean()
 }*/
 document.getElementById("stop").style.visibility = "hidden"
 document.getElementById("firldid").style.visibility = "hidden"
+document.getElementById("thinkingtime").style.visibility = "hidden"
 
 //下は初期値
 document.getElementById(panel1[0]).innerHTML=1
@@ -36,6 +37,15 @@ document.getElementById(panel2[6]).innerHTML=7
 document.getElementById(panel2[7]).innerHTML=8
 document.getElementById(panel2[8]).innerHTML=9
 document.getElementById('nextpanel').innerHTML=5
+var div = document.getElementById('thinkingtimeplayer');
+var mo = new MutationObserver(function() {
+  CPU()
+});
+var config = {
+  childList: true,
+};
+mo.observe(div, config);
+
 function reset(){
   document.getElementById(panel1[0]).innerHTML=1
   document.getElementById(panel1[1]).innerHTML=2
@@ -151,6 +161,13 @@ function panelcaluclation(id){
 
 
 function CPU(){
+  var now = new Date();
+  
+  //相手の答えがすぐ表示されても具合が悪い。
+  //考え中の文字をhtmlに出すために時間を測る。
+
+
+
   //全てのボタンにおいて押した場合のパターンを考え、
   //その中で最も合計値が高いものを採用する。
   //panela0 から順番に行い、勝ち残り方式で最良を決定する。
@@ -196,7 +213,6 @@ function CPU(){
        bestid = panel[l]
 
      }else if(best == supposedsum){//同値だったら時刻によってランダムに結果を変えよう。
-       var now = new Date();
        var sec = now.getSeconds()
        if(sec % 2 == 1){
          best = supposedsum
@@ -215,13 +231,18 @@ function CPU(){
     for (i=0; i < bestdelist.length ;i++){
       document.getElementById(bestdelist[i]).innerHTML= bestsubpanellist[i]
       }
-      document.getElementById("debug").innerHTML = 'ここまでは動いたで'
+      //document.getElementById("debug").innerHTML = 'ここまでは動いたで'
       //上の行に'ここまで動いた'入れると表示されない。
     document.getElementById(bestid).innerHTML=Number(document.getElementById("nextpanel").innerHTML);//押したパネルはに
     document.getElementById('nextpanel').innerHTML = nextnumber
    
     flg2 = flg2 + 1 
     document.getElementById('winner').innerHTML = flg2
+  while(new Date() < new Date(now.getTime() + 500)){
+
+  }
+  document.getElementById("thinkingtime").style.visibility = "hidden"
+    
     
 }
 
@@ -257,10 +278,11 @@ function CPU(){
      
       flg2 = flg2 + 1 
       document.getElementById('winner').innerHTML = flg2
-      CPU()
+      document.getElementById("thinkingtime").style.visibility = "visible"
+      document.getElementById("thinkingtimeplayer").innerHTML = Number(document.getElementById("thinkingtimeplayer").innerHTML) + 1
      //ここから下は終了後の勝敗判定
      //いちいち押すごとにトリガーするのもかったるいが、やはり常に作動させる方法が思いつかなかった。
-     if(flg2 == count){  
+     if(flg2/2 == count){  
        for (l=0; l < panel.length ;l++){
 
         sumhelp1 = Number(document.getElementById(panel1[l]).innerHTML)
@@ -282,9 +304,9 @@ function CPU(){
     }
     
   }
- 
 
 
+  
 
 
 
