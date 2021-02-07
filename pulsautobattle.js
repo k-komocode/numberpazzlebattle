@@ -6,8 +6,8 @@ var sum1 = 0
 var sumhelp1 = 0
 var sum2 = 0
 var sumhelp2 = 0
+var flg1 = 0
 var flg2 = 0
-
 var flg4 = new Boolean()
 
 /*for (i = 0; i < panel.length; i++){
@@ -64,9 +64,10 @@ function reset(){
   sumhelp1 = 0
  sum2 = 0
  sumhelp2 = 0
+ flg1 = 0
  flg2 = 0
  flg3 = 0
- flg4 = 0
+ flg4 = new Boolean()
 }
 
 function move(){
@@ -226,6 +227,7 @@ function CPU(){
     document.getElementById('winner').innerHTML = flg2
     document.getElementById("think").style.visibility = "hidden"
     
+    
 }
 
 
@@ -233,7 +235,7 @@ function CPU(){
 
   function pushed(id){
     let pushpanel = document.getElementById(id);
-    if (pushpanel.parentNode.getAttribute('id') == "bodydiv"){
+    if ((pushpanel.parentNode.getAttribute('id') == "bodydiv") && (flg1 == 0)){
       panel = panel1
       flg4 = true
       document.getElementById("stop").style.visibility = "hidden"
@@ -261,6 +263,7 @@ function CPU(){
       flg2 = flg2 + 1 
       document.getElementById('winner').innerHTML = flg2
       document.getElementById("think").style.visibility = "visible"
+      flg1 = 1
       var CPUattak = function(){
         CPU();
       }
@@ -288,7 +291,7 @@ function CPU(){
         }
       }
     }
-    
+    flg1 = 0
   }
  
 
