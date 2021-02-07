@@ -15,6 +15,7 @@ var flg4 = new Boolean()
 }*/
 document.getElementById("stop").style.visibility = "hidden"
 document.getElementById("firldid").style.visibility = "hidden"
+document.getElementById("think").style.visibility = "hidden"
 
 //下は初期値
 document.getElementById(panel1[0]).innerHTML=1
@@ -58,6 +59,7 @@ function reset(){
   document.getElementById('nextpanel').innerHTML=5
   document.getElementById("winner").innerHTML = ""
   document.getElementById('winner').innerHTML = 0
+  
   sum1 = 0
   sumhelp1 = 0
  sum2 = 0
