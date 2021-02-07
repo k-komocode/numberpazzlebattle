@@ -224,6 +224,7 @@ function CPU(){
    
     flg2 = flg2 + 1 
     document.getElementById('winner').innerHTML = flg2
+    document.getElementById("think").style.visibility = "hidden"
     
 }
 
@@ -259,7 +260,12 @@ function CPU(){
      
       flg2 = flg2 + 1 
       document.getElementById('winner').innerHTML = flg2
-      CPU()
+      document.getElementById("think").style.visibility = "visible"
+      var CPUattak = function(){
+        CPU();
+      }
+      setTimeout(CPUattak, 500);
+      
      //ここから下は終了後の勝敗判定
      //いちいち押すごとにトリガーするのもかったるいが、やはり常に作動させる方法が思いつかなかった。
      if(flg2/2 == count){  
