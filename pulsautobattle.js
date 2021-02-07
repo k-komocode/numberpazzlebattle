@@ -215,7 +215,7 @@ function CPU(){
     for (i=0; i < bestdelist.length ;i++){
       document.getElementById(bestdelist[i]).innerHTML= bestsubpanellist[i]
       }
-      document.getElementById("debug").innerHTML = 'ここまでは動いたで'
+      //document.getElementById("debug").innerHTML = 'ここまでは動いたで'
       //上の行に'ここまで動いた'入れると表示されない。
     document.getElementById(bestid).innerHTML=Number(document.getElementById("nextpanel").innerHTML);//押したパネルはに
     document.getElementById('nextpanel').innerHTML = nextnumber
@@ -260,7 +260,7 @@ function CPU(){
       CPU()
      //ここから下は終了後の勝敗判定
      //いちいち押すごとにトリガーするのもかったるいが、やはり常に作動させる方法が思いつかなかった。
-     if(flg2 == count){  
+     if(flg2/2 == count){  
        for (l=0; l < panel.length ;l++){
 
         sumhelp1 = Number(document.getElementById(panel1[l]).innerHTML)
