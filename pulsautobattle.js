@@ -14,7 +14,7 @@ var flg4 = new Boolean()
     document.getElementById(panel[i]).innerHTML=1;
 }*/
 document.getElementById("stop").style.visibility = "hidden"
-document.getElementById("firldid").style.visibility = "hidden"
+document.getElementById("firldid").style.display="none"
 document.getElementById("think").style.visibility = "hidden"
 
 //下は初期値
@@ -59,6 +59,8 @@ function reset(){
   document.getElementById('nextpanel').innerHTML=5
   document.getElementById("winner").innerHTML = ""
   document.getElementById('winner').innerHTML = 0
+  document.getElementById("sum1").innerHTML = ""
+  document.getElementById("sum2").innerHTML = ""
   
   sum1 = 0
   sumhelp1 = 0
@@ -72,7 +74,8 @@ function reset(){
 
 function move(){
     count = Number(document.getElementById("movecount").value)
-    document.getElementById("firldid").style.visibility = "visible"
+    document.getElementById("rule").style.display="none"
+    document.getElementById("firldid").style.display="block"
     reset()
 }
 
@@ -236,8 +239,8 @@ function CPU(){
        sum2 = sum2 + sumhelp2
       }
 
-       document.getElementById("sum1").innerHTML = sum1
-       document.getElementById("sum2").innerHTML = sum2
+       document.getElementById("sum1").innerHTML = "合計"+sum1
+       document.getElementById("sum2").innerHTML = "合計"+sum2
        if (sum1 > sum2){
          document.getElementById("winner").innerHTML = "<p>左の勝ちです</p>"
        }else if (sum1 < sum2){
