@@ -23,28 +23,32 @@
 
     <body>
         <h1>VSパズル(一人用)</h1>
-        <div id = 'rule' class='ruleclass'>
-            <h2>ルールおよび操作説明</h2>
-            <p>
-                １，まずは下にあるフォームから合計手数と先手後手を決めてください。<br />
-                ２，すると、それぞれ数字が書いてある9つのパネルが二組、合計18枚出てきます。<br />
-                ３，このパネルをクリックすることでパネルの数字を操作できます。<br />
-            </p>
-            <p>
-                ４，パネルをクリックすると、クリックした周囲にあるパネルの数字にクリックした数字が足されます。<br />
-                ５，が、計算の結果二桁になる時には、その一桁目のみが反映されます。<br />
-                ６，そして、クリックしたパネルの数字には、下にあるネクストパネルの数字が新たに現れます。<br />
-                ７，同時にネクストパネルにはクリックしたパネルの数字が書き込まれます。<br />
-            </p>
-            <p>
-                ８，これを1ターンとし、それぞれが入力したターン数まで互いに操作します。<br />
-                ９，最終的に合計が大きい方の勝ちです。<br />
-            </p>
-
+            <div id = 'rulebox' class='boxclass'>
+                <ul id = 'rule' class='naibuclass'>
+                    <h2>ルールおよび操作説明</h2>
+                    <p>
+                        １，まずは下にあるフォームから合計手数と先手後手を決めてください。<br />
+                        ２，すると、それぞれ数字が書いてある9つのパネルが二組、合計18枚出てきます。<br />
+                        ３，このパネルをクリックすることでパネルの数字を操作できます。<br />
+                    </p>
+                    <p>
+                        ４，パネルをクリックすると、クリックした周囲にあるパネルの数字にクリックした数字が足されます。<br />
+                        ５，が、計算の結果二桁になる時には、その一桁目のみが反映されます。<br />
+                        ６，そして、クリックしたパネルの数字には、下にあるネクストパネルの数字が新たに現れます。<br />
+                        ７，同時にネクストパネルにはクリックしたパネルの数字が書き込まれます。<br />
+                    </p>
+                    <p>
+                        ８，これを1ターンとし、それぞれが入力したターン数まで互いに操作します。<br />
+                        ９，最終的に合計が大きい方の勝ちです。<br />
+                        １０，一度開始するとこの説明は消えるので気を付けてください。<br />
+                    </p>
+                </ul>
         </div>
-        <form>
+        <form class='boxclass'>
             <p>
                 <label>合計手数を決めてください。<input type="text" id="movecount" size="40">＊２</label>
+                <input type="radio" id="sente" name = "junban" checked>先攻
+                <input type="radio" id="gote" name = "junban" >後攻
             </p>
             <p>
                 <input type="button" value="決定" onclick="move()">
@@ -54,7 +58,7 @@
         <div class ='firld' id = 'firldid'>
 
             <p>
-            <div id="bodydiv" class='panelbody1'>
+            <div id="bodydiv" class='panel body'>
                     <div>あなた</div><br>
                 <button id="panel0" class="btn btn-secondary tile" onclick="pushed(this.id)" > </button> <button id="panel1" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panel2" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button><br />
 
@@ -68,7 +72,7 @@
             </p>
 
             <p>
-            <div id="bodydiv2" class='panelbody2'>
+            <div id="bodydiv2" class='panel body'>
                 <div>相手</div><br>
                 <button id="panela0" class="btn btn-secondary tile" onclick="pushed(this.id)" > </button> <button id="panela1" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panela2" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button><br />
 
@@ -87,10 +91,10 @@
         <br>
         <div id = "nextid" class = 'nextclass'>
             <p>ネクストパネル：次、クリックしたパネルに入力される数字<br /></p>
-            <button id="nextpanel" class="btn btn-secondary tile" ></button>
+            <button id="nextpanel" class="btn btn-secondary tile next" ></button>
         </div>
         <div id = "stop">手番が飛んでます。</div>
-        <div id = "winner"></div>
+        <div id = "winner" class = "winnerclass"></div>
         <div id = "kakunin"></div>
         <div id = "debug"></div>
                 

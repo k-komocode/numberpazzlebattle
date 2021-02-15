@@ -10,57 +10,42 @@ var flg1 = 0
 var flg2 = 0
 var flg4 = new Boolean()
 
-/*for (i = 0; i < panel.length; i++){
-    document.getElementById(panel[i]).innerHTML=1;
-}*/
+
 document.getElementById("stop").style.visibility = "hidden"
 document.getElementById("firldid").style.display="none"
 document.getElementById("think").style.visibility = "hidden"
 
-//下は初期値
-document.getElementById(panel1[0]).innerHTML=1
-document.getElementById(panel1[1]).innerHTML=2
-document.getElementById(panel1[2]).innerHTML=3
-document.getElementById(panel1[3]).innerHTML=4
-document.getElementById(panel1[4]).innerHTML=5
-document.getElementById(panel1[5]).innerHTML=6
-document.getElementById(panel1[6]).innerHTML=7
-document.getElementById(panel1[7]).innerHTML=8
-document.getElementById(panel1[8]).innerHTML=9
-document.getElementById(panel2[0]).innerHTML=1
-document.getElementById(panel2[1]).innerHTML=2
-document.getElementById(panel2[2]).innerHTML=3
-document.getElementById(panel2[3]).innerHTML=4
-document.getElementById(panel2[4]).innerHTML=5
-document.getElementById(panel2[5]).innerHTML=6
-document.getElementById(panel2[6]).innerHTML=7
-document.getElementById(panel2[7]).innerHTML=8
-document.getElementById(panel2[8]).innerHTML=9
+
 document.getElementById('nextpanel').innerHTML=5
+
+
+
 function reset(){
-  document.getElementById(panel1[0]).innerHTML=1
-  document.getElementById(panel1[1]).innerHTML=2
-  document.getElementById(panel1[2]).innerHTML=3
-  document.getElementById(panel1[3]).innerHTML=4
-  document.getElementById(panel1[4]).innerHTML=5
-  document.getElementById(panel1[5]).innerHTML=6
-  document.getElementById(panel1[6]).innerHTML=7
-  document.getElementById(panel1[7]).innerHTML=8
-  document.getElementById(panel1[8]).innerHTML=9
-  document.getElementById(panel2[0]).innerHTML=1
-  document.getElementById(panel2[1]).innerHTML=2
-  document.getElementById(panel2[2]).innerHTML=3
-  document.getElementById(panel2[3]).innerHTML=4
-  document.getElementById(panel2[4]).innerHTML=5
-  document.getElementById(panel2[5]).innerHTML=6
-  document.getElementById(panel2[6]).innerHTML=7
-  document.getElementById(panel2[7]).innerHTML=8
-  document.getElementById(panel2[8]).innerHTML=9
+
+  for (i = 0; i < panel1.length; i++){
+    document.getElementById(panel1[i]).innerHTML=1+i;
+    document.getElementById(panel2[i]).innerHTML=1+i;
+}
   document.getElementById('nextpanel').innerHTML=5
   document.getElementById("winner").innerHTML = ""
   document.getElementById('winner').innerHTML = 0
   document.getElementById("sum1").innerHTML = ""
   document.getElementById("sum2").innerHTML = ""
+  flg2 = 0
+  var gote = document.getElementById("gote") 
+  if(gote.checked){
+     
+    document.getElementById('winner').innerHTML = flg2
+    document.getElementById("think").style.visibility = "visible"
+    flg1 = 1
+    var CPUattak = function(){
+      CPU();
+    }
+    setTimeout(CPUattak, 500);
+    flg1 = 0
+    flg5 = true
+    }
+}
   
   sum1 = 0
   sumhelp1 = 0
@@ -70,17 +55,22 @@ function reset(){
  flg2 = 0
  flg3 = 0
  flg4 = new Boolean()
-}
+ flg5 = new Boolean()
+ flg5 = true
+
 
 function move(){
     count = Number(document.getElementById("movecount").value)
     document.getElementById("rule").style.display="none"
     document.getElementById("firldid").style.display="block"
+
     reset()
 }
 
 function panelcaluclation(id){
-  var panelnumber = id.replace(/[^0-9]/g, ''); //idから数字の要素だけ抜く。panelnumberは押したパネルの場所
+  if(flg5 == true){
+    var panelnumber = id.replace(/[^0-9]/g, ''); //idから数字の要素だけ抜く。panelnumberは押したパネルの場所
+  }
   var subpanel = []       //パネルの表示している要素を入れる配列(この時点では空)
   var de = []             //パネルidそのものを入れる配列
   var returnmatrix = []
@@ -170,23 +160,25 @@ function CPU(){
   var bestid = ''
   panel = panel2
   for(l=0; l < panel2.length ;l++){ //パネルの数だけ続けるfor文
-   var supposedlist = panelcaluclation(panel[l])
-   var supposednextnumber = supposedlist.shift()   //この数字はプレイヤーの手番に影響するだけなのでここでは使わない。
+   var supposedlist = panelcaluclation(panel[l])    //それぞれのパネルを押した場合に対して、一回計算する
+   var supposednextnumber = supposedlist.shift()   //nextnumberをここで取り除く。
+                                                    //その数字はプレイヤーの手番に影響するだけなのでここでは使わない。
+
    var supposedpanelnumber = Number(supposedlist.shift())  //この数字は今調べているパネルに入る数字なので、合計値を出すときに使う
    let delist = []                   //deのリスト。則ちパネルのidのリスト
    let subpanellist = []             //サブパネルのリスト。則ち計算結果のリスト
    let subpanellistkeep = []         //合計値を出すときに破壊的な操作をするので、サブパネルリストをこっちでキープ
    
    for(i=0; i < supposedlist.length ;i++){//次の計算で条件分岐するために使うリストを生成するためのfor文
-     delist.push(supposedlist[i][0])
+     delist.push(supposedlist[i][0])            //[[de[0],subpanel[0]]・・・・・・]であるので、ここでidを保存してる
      subpanellist.push(supposedlist[i][1])
      subpanellistkeep.push(supposedlist[i][1])
    }
    var supposedsum = 0
-   for(i=0; i < supposedlist.length ;i++){  //パネルの計算が終わるまで続けるfor文
+   for(i=0; i < panel2.length ;i++){  //パネルの計算が終わるまで続けるfor文
        if(delist.includes(panel2[i])){
          supposedsum = supposedsum + Number(subpanellist.shift())
-       } else if (panel[l] == panel2[i]){
+       } else if (panel2[i] == panel[l]){
          supposedsum = supposedsum + supposedpanelnumber 
        }else {
          supposedsum = supposedsum + Number(document.getElementById(panel2[i]).innerHTML)
@@ -229,7 +221,9 @@ function CPU(){
     flg2 = flg2 + 1 
     document.getElementById('winner').innerHTML = flg2
     document.getElementById("think").style.visibility = "hidden"
-
+    hantei()   
+}
+  function hantei(){
     if(flg2/2 == count){  
       for (l=0; l < panel.length ;l++){
 
@@ -248,11 +242,10 @@ function CPU(){
        }else{
          document.getElementById("winner").innerHTML = "<p>同点です</p>"
        }
+      flg5 = false
+       
      }
-    
-    
-}
-
+  }
 
 
 
@@ -287,16 +280,19 @@ function CPU(){
       document.getElementById('winner').innerHTML = flg2
       document.getElementById("think").style.visibility = "visible"
       flg1 = 1
-      var CPUattak = function(){
-        CPU();
-      }
-      setTimeout(CPUattak, 500);
       
+      if (flg2/2 != count){
+        var CPUattak = function(){
+          CPU();
+        }
+        setTimeout(CPUattak, 500);
+      }
      //ここから下は終了後の勝敗判定
      //いちいち押すごとにトリガーするのもかったるいが、やはり常に作動させる方法が思いつかなかった。
 
     }
     flg1 = 0
+    hantei()
   }
  
 

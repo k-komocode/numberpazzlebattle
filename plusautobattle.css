@@ -26,19 +26,23 @@
     background-color: #aaa; /* 視覚化のための背景色 */
   
   }
-  .panelbody1{
+  .body{
 
     text-align: center;
   }
-  .panelbody2{
 
-    text-align: center;
-  }
   .nextclass{
 
     text-align: center;
   }
-
+  .boxclass{
+    text-align: center;
+    
+  }
+  .naibuclass{
+    display: inline-block;
+    text-align: left;
+  }
 
   .thinkclass{
     font-size: 150%
@@ -46,6 +50,16 @@
   .sumclass{
     font-size: 130%
   }
-  .btn btn-secondary tile{
-    font-size: 140%
+  .btn-secondary{
+    font-size: 200%
+  }
+  .next{
+    font-size: 150%;
+
+    width:70px; 
+
+    height:70px;
+  }
+  .winnerclass{
+    font-size: 200%
   }
