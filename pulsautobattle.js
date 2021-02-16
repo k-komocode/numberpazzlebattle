@@ -12,12 +12,12 @@ var flg4 = new Boolean()
 
 
 document.getElementById("stop").style.visibility = "hidden"
+
 document.getElementById("firldid").style.display="none"
 document.getElementById("think").style.visibility = "hidden"
 
 
 document.getElementById('nextpanel').innerHTML=5
-
 
 
 function reset(){
@@ -31,6 +31,7 @@ function reset(){
   document.getElementById('winner').innerHTML = 0
   document.getElementById("sum1").innerHTML = ""
   document.getElementById("sum2").innerHTML = ""
+  document.getElementById("turn").style.visibility = "visible"
   flg2 = 0
   var gote = document.getElementById("gote") 
   if(gote.checked){
@@ -147,6 +148,13 @@ function panelcaluclation(id){
 
 
 function CPU(){
+  var now = new Date();
+  
+  //相手の答えがすぐ表示されても具合が悪い。
+  //考え中の文字をhtmlに出すために時間を測る。
+
+
+
   //全てのボタンにおいて押した場合のパターンを考え、
   //その中で最も合計値が高いものを採用する。
   //panela0 から順番に行い、勝ち残り方式で最良を決定する。
@@ -194,7 +202,6 @@ function CPU(){
        bestid = panel[l]
 
      }else if(best == supposedsum){//同値だったら時刻によってランダムに結果を変えよう。
-       var now = new Date();
        var sec = now.getSeconds()
        if(sec % 2 == 1){
          best = supposedsum
@@ -220,8 +227,10 @@ function CPU(){
    
     flg2 = flg2 + 1 
     document.getElementById('winner').innerHTML = flg2
+
     document.getElementById("think").style.visibility = "hidden"
     hantei()   
+
 }
   function hantei(){
     if(flg2/2 == count){  
@@ -232,6 +241,7 @@ function CPU(){
        sumhelp2 = Number(document.getElementById(panel2[l]).innerHTML)
        sum2 = sum2 + sumhelp2
       }
+      document.getElementById("turn").style.visibility = "hidden"
 
        document.getElementById("sum1").innerHTML = "合計"+sum1
        document.getElementById("sum2").innerHTML = "合計"+sum2
@@ -278,6 +288,7 @@ function CPU(){
      
       flg2 = flg2 + 1 
       document.getElementById('winner').innerHTML = flg2
+
       document.getElementById("think").style.visibility = "visible"
       flg1 = 1
       
@@ -290,13 +301,14 @@ function CPU(){
      //ここから下は終了後の勝敗判定
      //いちいち押すごとにトリガーするのもかったるいが、やはり常に作動させる方法が思いつかなかった。
 
+
     }
     flg1 = 0
     hantei()
   }
- 
 
 
+  
 
 
 

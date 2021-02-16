@@ -4,7 +4,9 @@
 
     <head>
 
+
         <title>一人用バトルパズル</title>
+
 
         <meta charset="utf-8">
             <!--　上の文は文字コードの指定 -->
@@ -66,8 +68,11 @@
 
                 <button id="panel6" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panel7"  class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panel8" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button><br />
                     <!-- btn btn-secondary tileは、bootstrapから引っ張ってきた要素。onclickはクリックに大してこう反応せよというコマンド　-->
+
                 <div id = 'sum1' class = 'sumclass'></div><br />
                 <div id = 'play' class = 'thinkclass'>&nbsp;</div>
+
+
             </div>
             </p>
 
@@ -80,8 +85,11 @@
 
                 <button id="panela6" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panela7"  class="btn btn-secondary tile" onclick="pushed(this.id)" ></button> <button id="panela8" class="btn btn-secondary tile" onclick="pushed(this.id)" ></button><br />
                     <!-- btn btn-secondary tileは、bootstrapから引っ張ってきた要素。onclickはクリックに大してこう反応せよというコマンド　-->
+
                 <div id = 'sum2' class = 'sumclass'></div><br />
                 <div id = 'think' class = 'thinkclass'>考え中</div>    
+
+
             </div>
             </p>
         </div>
@@ -90,13 +98,16 @@
         <button class="btn btn-light" onclick="reset()">リセット</button>
         <br>
         <div id = "nextid" class = 'nextclass'>
+
             <p>ネクストパネル：次、クリックしたパネルに入力される数字<br /></p>
             <button id="nextpanel" class="btn btn-secondary tile next" ></button>
+
         </div>
         <div id = "stop">手番が飛んでます。</div>
-        <div id = "winner" class = "winnerclass"></div>
+        <div id = "winner" class = "winnerclass"></div> <div id = "turn">ターン目</div>   
         <div id = "kakunin"></div>
-        <div id = "debug"></div>
+        <!--<div id = "debug"></div> -->
+        
                 
             
             
