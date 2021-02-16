@@ -1,0 +1,3 @@
+# numberpazzlebattle
+
+これは趣味で作ったnumberpazzleを一人用の対戦ゲームに改造したもの。
