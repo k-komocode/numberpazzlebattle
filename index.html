@@ -47,14 +47,16 @@
                 </ul>
         </div>
         <form class='boxclass'>
-            <p>
-                <label>合計手数を決めてください。<input type="text" id="movecount" size="40">＊２</label>
-                <input type="radio" id="sente" name = "junban" checked>先攻
-                <input type="radio" id="gote" name = "junban" >後攻
-            </p>
-            <p>
-                <input type="button" value="決定" onclick="move()">
-            </p>
+            <ul id = 'formid' class='naibuclass'>
+                <p>
+                    <label>合計手数を決めてください。<input type="text" id="movecount" size="40">＊２</label><br />
+                    <label>先手か後手、どちらでプレイするか決めてください。<input type="radio" id="sente" name = "junban" checked>先攻 <input type="radio" id="gote" name = "junban" >後攻</label><br />
+                    <label>対戦相手の強さを決めてください。<input type="radio" id="level1" name = "level" checked>レベル1 <input type="radio" id="level2" name = "level" >レベル2</label><br />
+                </p>
+                <p>
+                    <input type="button" value="決定" onclick="move()">
+                </p>
+            </ul>
         </form>
         
         <div class ='firld' id = 'firldid'>
