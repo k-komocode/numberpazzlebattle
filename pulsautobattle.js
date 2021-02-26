@@ -26,7 +26,7 @@ function reset(){
   for (i = 0; i < panel1.length; i++){
     document.getElementById(panel1[i]).innerHTML=1+i;
     document.getElementById(panel2[i]).innerHTML=1+i;
-}
+  }
   document.getElementById('nextpanel').innerHTML=5
   document.getElementById("winner").innerHTML = ""
   document.getElementById('winner').innerHTML = 0
@@ -38,6 +38,8 @@ function reset(){
   var level2 = document.getElementById("level2")
   if(level2.checked){
     flg3 = 1
+  }else if(level3.checked){
+    flg3 = 2
   } 
   if(gote.checked){
      
@@ -47,8 +49,10 @@ function reset(){
     var CPUattak = function(){
       if(flg3 == 0){
         CPU()
-      }else{
+      }else if(flg3 == 1){
         CPU2()
+      }else{
+        CPU3()
       }
     }
     setTimeout(CPUattak, 500);
@@ -82,7 +86,10 @@ function move(){
   }
 }
 
-function panelcaluclation(id,panel){
+function panelcaluclation(id,panel){        //押すパネルのidとその盤面を入力すると、
+                                            //ネクストパネルに入る数字と押したパネル、盤面の結果が出力される。
+                                            //いずれも今の盤面の状況を使って計算しているので、
+                                            //2手以上先を読むことには使えない。
   if(flg5 == true){
     var panelnumber = id.replace(/[^0-9]/g, ''); //idから数字の要素だけ抜く。panelnumberは押したパネルの場所
   }
@@ -151,7 +158,75 @@ function panelcaluclation(id,panel){
                         //[数値(数値),文字(id),[文字(id),文字(数値)]・・・・・・]
 }
   
+function panelcaluclation2(id,panel,banmen){        //こちらは2手以上先を読む用。banmenにその時の盤面を示す配列を入れる。
 
+if(flg5 == true){
+var panelnumber = id.replace(/[^0-9]/g, ''); //idから数字の要素だけ抜く。panelnumberは押したパネルの場所
+}
+var subpanel = []       //パネルの表示している要素を入れる配列(この時点では空)
+var de = []             //パネルidそのものを入れる配列
+var returnmatrix = []
+if([1,3,4].includes(Number(panelnumber))){                //panel0を推したときに反応する奴
+subpanel.push(banmen[0])
+de.push(panel[0])
+
+}
+if([0,2,3,4,5].includes(Number(panelnumber))){            //panel1を推したときに反応する奴
+subpanel.push(banmen[1])
+de.push(panel[1])
+
+}
+if([1,4,5].includes(Number(panelnumber))){                //panel2を推したときに反応する奴
+subpanel.push(banmen[2])
+de.push(panel[2])
+
+}
+if([0,1,4,6,7].includes(Number(panelnumber))){            //panel3を推したときに反応する奴
+subpanel.push(banmen[3])
+de.push(panel[3])
+
+}
+if([0,1,2,3,5,6,7,8].includes(Number(panelnumber))){      //panel4を推したときに反応する奴
+subpanel.push(banmen[4])
+de.push(panel[4])
+
+}
+if([1,2,4,7,8,].includes(Number(panelnumber))){           //panel5を推したときに反応する奴
+subpanel.push(banmen[5])
+de.push(panel[5])
+
+}
+if([3,4,7].includes(Number(panelnumber))){                //panel6を推したときに反応する奴
+subpanel.push(banmen[6])
+de.push(panel[6])
+
+}
+if([3,4,5,6,8].includes(Number(panelnumber))){            //panel7を推したときに反応する奴
+subpanel.push(banmen[7])
+de.push(panel[7])
+
+}
+if([4,5,7].includes(Number(panelnumber))){                //panel8を推したときに反応する奴
+subpanel.push(banmen[8])
+de.push(panel[8])
+
+}
+const nextNumber = Number(document.getElementById(panel[panelnumber]).innerHTML) //押したパネルの数値を保存
+for (i=0; i < subpanel.length ;i++){
+var ab = Number(subpanel[i])+ nextNumber 
+ab = String(ab)
+subpanel[i] = ab.substring(ab.length-1)//ab.lengthはabの長さ。二桁なら2になる。
+  //substringは前の変数(この場合はab)を文字列に変え、
+  //かつそのn番目以降を返す関数
+}
+returnmatrix = [nextNumber,panelnumber]
+for (i=0; i < subpanel.length ;i++){
+returnmatrix.push([de[i],[subpanel[i]]])
+}
+return returnmatrix   //[nextNumber,panelnumber,[de[0],subpanel[0]]・・・・・・]
+//下はリターンされる要素の型
+//[数値(数値),文字(id),[文字(id),文字(数値)]・・・・・・]
+}
 
     
 //caluculation関数でリターンしなきゃいけない物。
@@ -161,7 +236,7 @@ function panelcaluclation(id,panel){
 //４
 
 
-function CPU(){
+function CPU(){                         //最も自分の合計値が高くなる手を採用する。
   var now = new Date();
   
   //相手の答えがすぐ表示されても具合が悪い。
@@ -247,13 +322,8 @@ function CPU(){
 
 }
 
-function CPU2(){
+function CPU2(){              //プレイヤーより常に自分の合計値のが高くなるような手を積極的に採用する
   var now = new Date();
-  
-  //相手の答えがすぐ表示されても具合が悪い。
-  //考え中の文字をhtmlに出すために時間を測る。
-
-
 
   //全てのボタンにおいて押した場合のパターンを考え、
   //その中で最も合計値が高いものを採用する。
@@ -406,6 +476,98 @@ function CPU2(){
   }
 }
 
+function CPU3(){                        //二手先を読んで最も合計値が大きくなる手を採用する。
+  var now = new Date();
+  
+
+  var best = 0
+  let bestdelist = []
+  let bestsubpanellist = []
+  var bestid = ''
+  for(l=0; l < panel2.length ;l++){ //パネルの数だけ続けるfor文
+    
+   var supposedlist = panelcaluclation(panel2[l],panel2)    //それぞれのパネルを押した場合に対して、一回計算する
+   var supposednextnumber = supposedlist.shift()   //nextnumberをここで取り除く。
+                                                    //その数字はプレイヤーの手番に影響するだけなのでここでは使わない。
+
+   var supposedpanelnumber = supposedlist.shift()  //この数字は今調べているパネルのidなので、使わない
+   let delist = []                   //deのリスト。則ちパネルのidのリスト
+
+   let subpanellist = []             //サブパネルのリスト。則ち計算結果のリスト
+   let subpanellist2 = []             //サブパネルのリスト。則ち計算結果のリスト
+   let subpanellistkeep = []         //合計値を出すときに破壊的な操作をするので、サブパネルリストをこっちでキープ
+   
+   for(i=0; i < supposedlist.length ;i++){//次の計算で条件分岐するために使うリストを生成するためのfor文
+     delist.push(supposedlist[i][0])            //[[de[0],subpanel[0]]・・・・・・]であるので、ここでidを保存してる
+     subpanellist.push(supposedlist[i][1])
+     subpanellistkeep.push(supposedlist[i][1])
+   }
+   let banmen = []
+   for(i=0; i < panel2.length ;i++){  //パネルの計算が終わるまで続けるfor文。この部分で各パネルを押した場合の合計数値を見る
+      if(delist.includes(panel2[i])){
+      banmen.push(Number(subpanellist.shift()))
+      } else if (panel2[i] == panel2[l]){
+        banmen.push(Number(document.getElementById("nextpanel").innerHTML))    //押したパネルはネクストパネルの数値になる
+      }else {
+      banmen.push(Number(document.getElementById(panel2[i]).innerHTML))
+      }
+
+    }
+
+   for (o=0; o < panel2.length ;o++){  
+   var supposedlist2 = panelcaluclation2(panel2[o],panel2,banmen)
+
+    for(i=0; i < supposedlist2.length ;i++){
+       
+    subpanellist2.push(supposedlist2[i][1])
+    }
+    var supposedsum = 0
+    for(i=0; i < panel2.length ;i++){  //パネルの計算が終わるまで続けるfor文。この部分で各パネルを押した場合の合計数値を見る
+        if(delist.includes(panel2[i])){
+          supposedsum = supposedsum + Number(subpanellist2.shift())
+        } else if (panel2[i] == panel2[o]){
+          supposedsum = supposedsum +  0
+        }else {
+          supposedsum = supposedsum + Number(banmen[i])
+        }
+ 
+     }
+      if(best < supposedsum){ //最高値がsupposedsumならそっちをbestにする。
+        best = supposedsum 
+        bestdelist = delist
+        bestsubpanellist = subpanellistkeep
+        bestid = panel2[l]
+      }else if(best == supposedsum){//同値だったら時刻によってランダムに結果を変えよう。
+        var sec = now.getSeconds()
+        if(sec % 2 == 1){
+          best = supposedsum
+          bestdelist = delist
+          bestsubpanellist = subpanellistkeep
+          bestid = panel2[l]
+        }
+      }else{
+        //もっとも合計値が高いのはbestなので今現在特に変化なし。
+      }
+   }
+  }
+  
+    var nextnumber = Number(document.getElementById(bestid).innerHTML)
+    
+    for (i=0; i < bestdelist.length ;i++){
+      document.getElementById(bestdelist[i]).innerHTML= bestsubpanellist[i]
+      }
+      //document.getElementById("debug").innerHTML = 'ここまでは動いたで'
+      //上の行に'ここまで動いた'入れると表示されない。
+    document.getElementById(bestid).innerHTML=Number(document.getElementById("nextpanel").innerHTML);
+    document.getElementById('nextpanel').innerHTML = nextnumber
+   
+    flg2 = flg2 + 1 
+    document.getElementById('winner').innerHTML = flg2
+
+    document.getElementById("think").style.visibility = "hidden"
+    hantei()   
+
+}
 
 
   function hantei(){
@@ -472,8 +634,10 @@ function CPU2(){
         var CPUattak = function(){
           if(flg3 == 0){
             CPU()
-          }else{
+          }else if(flg3 == 1){
             CPU2()
+          }else{
+            CPU3()
           }
         }
         setTimeout(CPUattak, 500);
