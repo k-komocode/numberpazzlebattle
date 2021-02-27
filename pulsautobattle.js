@@ -11,6 +11,8 @@ var flg2 = 0
 var flg3 = 0
 var flg4 = new Boolean()
 
+var flg5 = new Boolean()
+flg5 = true
 
 document.getElementById("stop").style.visibility = "hidden"
 document.getElementById("nextid").style.visibility = "hidden"
@@ -36,6 +38,7 @@ function reset(){
   flg2 = 0
   var gote = document.getElementById("gote") 
   var level2 = document.getElementById("level2")
+  var level3 = document.getElementById("level3")
   if(level2.checked){
     flg3 = 1
   }else if(level3.checked){
@@ -57,20 +60,12 @@ function reset(){
     }
     setTimeout(CPUattak, 500);
     flg1 = 0
-    flg5 = true
+    
     }
+    flg5 = true
 }
   
-  sum1 = 0
-  sumhelp1 = 0
- sum2 = 0
- sumhelp2 = 0
- flg1 = 0
- flg2 = 0
- flg3 = 0
- flg4 = new Boolean()
- flg5 = new Boolean()
- flg5 = true
+
 
 
 function move(){
@@ -590,7 +585,7 @@ function CPU3(){                        //二手先を読んで最も合計値�
        }else{
          document.getElementById("winner").innerHTML = "<p>同点です</p>"
        }
-      flg5 = false
+      flg5 = false              //勝負の決着が付いたらこれ以上操作できないようにする。
        
      }
   }
