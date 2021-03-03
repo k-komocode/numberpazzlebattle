@@ -498,40 +498,27 @@ function CPU3(){                        //二手先を読んで最も合計値�
      subpanellistkeep.push(supposedlist[i][1])
    }
    let banmen = []
-   for(i=0; i < panel2.length ;i++){  //パネルの計算が終わるまで続けるfor文。この部分で各パネルを押した場合の合計数値を見る
-      if(delist.includes(panel2[i])){
-      banmen.push(Number(subpanellist.shift()))
-      } else if (panel2[i] == panel2[l]){
-        banmen.push(Number(document.getElementById("nextpanel").innerHTML))    //押したパネルはネクストパネルの数値になる
-      }else {
-      banmen.push(Number(document.getElementById(panel2[i]).innerHTML))
-      }
 
-    }
-
-   for (o=0; o < panel2.length ;o++){  
-   var supposedlist2 = panelcaluclation2(panel2[o],panel2,banmen)
-
-    for(i=0; i < supposedlist2.length ;i++){
-       
-    subpanellist2.push(supposedlist2[i][1])
-    }
-    var supposedsum = 0
-    for(i=0; i < panel2.length ;i++){  //パネルの計算が終わるまで続けるfor文。この部分で各パネルを押した場合の合計数値を見る
+    if((flg2+1 == 2*count) || (flg2+1 == 2*count-1)){     //最後の手では二手も読む必要が無いので、ここで分岐。
+      var supposedsum = 0
+      for(i=0; i < panel2.length ;i++){  //パネルの計算が終わるまで続けるfor文。この部分で各パネルを押した場合の合計数値を見る
         if(delist.includes(panel2[i])){
-          supposedsum = supposedsum + Number(subpanellist2.shift())
-        } else if (panel2[i] == panel2[o]){
-          supposedsum = supposedsum +  0
+          supposedsum = supposedsum + Number(subpanellist.shift())
+        } else if (panel2[i] == panel2[l]){
+          supposedsum = supposedsum +  Number(document.getElementById("nextpanel").innerHTML)    //押したパネルはネクストパネルの数値になる
         }else {
-          supposedsum = supposedsum + Number(banmen[i])
+          supposedsum = supposedsum + Number(document.getElementById(panel2[i]).innerHTML)
         }
  
-     }
+      }
+     
       if(best < supposedsum){ //最高値がsupposedsumならそっちをbestにする。
+ 
         best = supposedsum 
         bestdelist = delist
         bestsubpanellist = subpanellistkeep
         bestid = panel2[l]
+ 
       }else if(best == supposedsum){//同値だったら時刻によってランダムに結果を変えよう。
         var sec = now.getSeconds()
         if(sec % 2 == 1){
@@ -540,27 +527,76 @@ function CPU3(){                        //二手先を読んで最も合計値�
           bestsubpanellist = subpanellistkeep
           bestid = panel2[l]
         }
+ 
       }else{
         //もっとも合計値が高いのはbestなので今現在特に変化なし。
       }
-   }
+
+
+    }else{
+      for(i=0; i < panel2.length ;i++){  //パネルの計算が終わるまで続けるfor文。この部分で各パネルを押した場合の合計数値を見る
+        if(delist.includes(panel2[i])){
+          banmen.push(Number(subpanellist.shift()))
+        } else if (panel2[i] == panel2[l]){
+          banmen.push(Number(document.getElementById("nextpanel").innerHTML))    //押したパネルはネクストパネルの数値になる
+        }else {
+          banmen.push(Number(document.getElementById(panel2[i]).innerHTML))
+        }
+  
+      }
+      for (o=0; o < panel2.length ;o++){  
+        var supposedlist2 = panelcaluclation2(panel2[o],panel2,banmen)
+
+        for(i=0; i < supposedlist2.length ;i++){
+       
+          subpanellist2.push(supposedlist2[i][1])
+        }
+        var supposedsum = 0
+        for(i=0; i < panel2.length ;i++){  //パネルの計算が終わるまで続けるfor文。この部分で各パネルを押した場合の合計数値を見る
+          if(delist.includes(panel2[i])){
+            supposedsum = supposedsum + Number(subpanellist2.shift())
+          } else if (panel2[i] == panel2[o]){
+            supposedsum = supposedsum +  0
+          }else {
+            supposedsum = supposedsum + Number(banmen[i])
+          }
+ 
+        }
+        if(best < supposedsum){ //最高値がsupposedsumならそっちをbestにする。
+          best = supposedsum 
+          bestdelist = delist
+          bestsubpanellist = subpanellistkeep
+          bestid = panel2[l]
+        }else if(best == supposedsum){//同値だったら時刻によってランダムに結果を変えよう。
+          var sec = now.getSeconds()
+          if(sec % 2 == 1){
+            best = supposedsum
+            bestdelist = delist
+            bestsubpanellist = subpanellistkeep
+            bestid = panel2[l]
+          }
+        }else{
+        //もっとも合計値が高いのはbestなので今現在特に変化なし。
+        }
+      }
+    }
   }
   
-    var nextnumber = Number(document.getElementById(bestid).innerHTML)
+  var nextnumber = Number(document.getElementById(bestid).innerHTML)
     
-    for (i=0; i < bestdelist.length ;i++){
-      document.getElementById(bestdelist[i]).innerHTML= bestsubpanellist[i]
-      }
+  for (i=0; i < bestdelist.length ;i++){
+    document.getElementById(bestdelist[i]).innerHTML= bestsubpanellist[i]
+  }
       //document.getElementById("debug").innerHTML = 'ここまでは動いたで'
       //上の行に'ここまで動いた'入れると表示されない。
-    document.getElementById(bestid).innerHTML=Number(document.getElementById("nextpanel").innerHTML);
-    document.getElementById('nextpanel').innerHTML = nextnumber
+  document.getElementById(bestid).innerHTML=Number(document.getElementById("nextpanel").innerHTML);
+  document.getElementById('nextpanel').innerHTML = nextnumber
    
-    flg2 = flg2 + 1 
-    document.getElementById('winner').innerHTML = flg2
+  flg2 = flg2 + 1 
+  document.getElementById('winner').innerHTML = flg2
 
-    document.getElementById("think").style.visibility = "hidden"
-    hantei()   
+  document.getElementById("think").style.visibility = "hidden"
+  hantei()   
 
 }
 
